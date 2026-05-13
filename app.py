@@ -10,59 +10,118 @@ st.set_page_config(page_title="rMATS-Suite: Alternative Splicing Analysis & Visu
 
 st.markdown("""
     <style>
-    /* Force high-contrast Light Mode */
-    .stApp { background-color: #FFFFFF !important; color: #1A1A1A !important; }
-    header { background-color: #FFFFFF !important; }
-    
-    /* Sidebar styling */
-    [data-testid="stSidebar"] { background-color: #F0F2F6 !important; border-right: 1px solid #DDE2E6; }
-    
-    /* Buttons: Deep Sea Blue */
-    .stButton>button { 
-        background-color: #004085 !important; color: white !important; border-radius: 4px; 
-        font-weight: 600; width: 100%; border: none; padding: 0.5rem;
-    }
-    .stButton>button:hover { background-color: #002752 !important; color: #FFFFFF !important; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-    /* Input fields */
+    /* Global Typography */
+    .stApp {
+        font-family: 'Inter', sans-serif !important;
+    }
+
+    /* Support for Light Mode (Default) */
+    [data-theme="light"] .stApp {
+        background-color: #F8FAFC !important;
+        color: #1E293B !important;
+    }
+
+    /* Header / Navbar Simulation */
+    header { background-color: rgba(255, 255, 255, 0.1) !important; backdrop-filter: blur(10px); }
+    
+    /* Sidebar Styling */
+    [data-testid="stSidebar"] {
+        border-right: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 4px 0 15px rgba(0,0,0,0.02);
+    }
+    
+    /* Premium Card Container */
+    .st-emotion-cache-12w0qpk { 
+        padding: 2rem; 
+        border-radius: 16px; 
+        border: 1px solid rgba(0,0,0,0.05);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Unified Button Style: ERplot Deep Sea Blue */
+    .stButton>button { 
+        background: linear-gradient(135deg, #004085 0%, #002752 100%) !important;
+        color: white !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        padding: 0.6rem 1.5rem !important;
+        border: none !important;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 4px 12px rgba(0, 64, 133, 0.2) !important;
+    }
+    .stButton>button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 64, 133, 0.3) !important;
+        filter: brightness(1.1);
+    }
+
+    /* Input Styling - Removing forced white background to support dark mode */
     .stTextInput>div>div>input, .stTextArea>div>textarea {
-        background-color: #F8F9FA !important; color: #1A1A1A !important;
-        border: 1px solid #CED4DA !important;
+        border-radius: 10px !important;
+        transition: border-color 0.2s ease;
     }
     
-    /* Terminal Console Style */
+    /* Code / Terminal Block */
     code { 
-        color: #000000 !important; 
-        background-color: #F1F3F5 !important; 
-        border-left: 5px solid #004085 !important;
-        display: block;
-        padding: 10px;
+        border-left: 4px solid #004085 !important;
+        border-radius: 4px;
+        padding: 12px !important;
     }
     
-    h1, h2, h3 { color: #002752; font-family: 'Inter', sans-serif; }
-    
-    /* Clean Tabs Styling */
+    /* Custom Tabs - Bluish & Highlighted */
     .stTabs [data-baseweb="tab-list"] { 
-        gap: 12px; 
-        background-color: transparent; 
-        border-bottom: 2px solid #F0F2F6;
+        gap: 10px; 
+        padding: 8px 12px;
+        background-color: #F0F9FF; /* Cleaner, vibrant light blue */
+        border-radius: 20px; /* Increased for a smoother look */
+        border: 1px solid #E0F2FE;
+        box-shadow: inset 0 2px 4px rgba(0, 64, 133, 0.02);
+        margin: 10px 0;
+        overflow: visible !important;
     }
     .stTabs [data-baseweb="tab"] { 
-        font-weight: 700; 
-        color: #495057; 
-        font-size: 1rem; 
-        padding: 10px 20px;
-        border-radius: 8px 8px 0 0;
+        height: 44px;
+        border-radius: 12px !important;
+        background-color: transparent !important;
         border: none !important;
-        transition: background-color 0.2s ease;
+        color: #64748B !important;
+        font-weight: 600 !important;
+        transition: all 0.2s ease;
+        padding: 0 20px !important;
     }
     .stTabs [aria-selected="true"] { 
-        color: #FFFFFF !important; 
-        background-color: #004085 !important; 
+        background: linear-gradient(135deg, #0056b3 0%, #004085 100%) !important;
+        color: white !important;
+        box-shadow: 0 4px 12px rgba(0, 64, 133, 0.2) !important;
     }
-    .stTabs [data-baseweb="tab"]:hover {
-        background-color: #F8F9FA;
-        color: #004085;
+
+    /* Hide the default Streamlit red underline */
+    [data-baseweb="tab-highlight"] {
+        background-color: transparent !important;
+    }
+
+    /* Dark Mode Overrides for Tabs */
+    [data-theme="dark"] .stTabs [data-baseweb="tab-list"] {
+        background-color: #1E293B;
+        border: 1px solid #334155;
+    }
+    [data-theme="dark"] .stTabs [data-baseweb="tab"] {
+        color: #94A3B8 !important;
+    }
+
+    /* Footer Credits */
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        font-size: 12px;
+        border-top: 1px solid rgba(0,0,0,0.05);
+        z-index: 99;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -165,19 +224,16 @@ with st.sidebar:
     READLEN = st.number_input("Read Length (bp)", value=151, help="Total length of each sequencing read (e.g., 151 for 2x150bp paired-end).")
     LIBTYPE = st.selectbox("Library Type", ["fr-unstranded", "fr-firststrand", "fr-secondstrand"], index=1, 
                            help="Strandedness of the RNA-Seq library. 'fr-firststrand' is standard for most Illumina dUTP kits.")
-    DOCKER_IMG = st.text_input("Docker Image", value="rmats-suite:latest", disabled=True, 
-                               help="The fixed containerized environment for rMATS and Sashimi plotting.")
-    
-    st.divider()
-    st.markdown("### 🏛️ Credits")
-    c_col1, c_col2 = st.columns(2)
-    with c_col1:
-        st.link_button("rMATS", "https://github.com/Xinglab/rmats-turbo", use_container_width=True)
-    with c_col2:
-        st.link_button("Sashimi", "https://github.com/Xinglab/rmats2sashimiplot", use_container_width=True)
-    
-    with st.expander("📝 Cite rMATS"):
-        st.caption("Shen S, Park JW, Lu ZX, Lin L, Henry MD, Wu YN, Zhou Q, Xing Y. **rMATS: Robust and flexible detection of differential alternative splicing from replicate RNA-Seq data.** *Proc Natl Acad Sci U S A.* 2014;111(51):E5593-601.")
+       
+    st.markdown("""
+    <div style='margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05);'>
+        <p style='font-size: 0.8rem; opacity: 0.7;'>
+            Designed & Developed by <a href='#' style='color: #004085; font-weight: 700; text-decoration: none;'>Om</a>
+        </p>
+    </div>
+""", unsafe_allow_html=True)
+   
+   
 
 tab1, tab2 = st.tabs(["📊 Run rMATS Analysis", "🎨 Gene-Specific Sashimi Plots"])
 
@@ -187,7 +243,7 @@ with tab1:
     c1, c2 = st.columns(2)
     with c1:
         st.subheader("📂 Inputs")
-        gtf_path = st.text_input("GTF Annotation", "/media/erpl/hdd4/Om/rMATSGUI/Homo_sapiens.GRCh38.111.chr.gtf", 
+        gtf_path = st.text_input("GTF Annotation", "/media/erpl/hdd4/Om/ERplot/rMATSGUI/Homo_sapiens.GRCh38.111.chr.gtf", 
                                 help="Absolute path to the reference GTF file. Must match the BAM assembly (e.g., GRCh38).")
         b1_in = st.text_area("Group 1 BAMs (Control - One per line)", 
                             value="/media/erpl/hdd4/Om/AEH_AOH/aligned/AEN1_Aligned.sortedByCoord.out.bam\n/media/erpl/hdd4/Om/AEH_AOH/aligned/AEN2_Aligned.sortedByCoord.out.bam",
@@ -207,8 +263,8 @@ with tab1:
         os.makedirs(out_dir, exist_ok=True)
 
         # Prepare path files
-        b1_list = [f"/data{x.strip()}" for x in b1_in.split("\n") if x.strip()]
-        b2_list = [f"/data{x.strip()}" for x in b2_in.split("\n") if x.strip()]
+        b1_list = [x.strip() for x in b1_in.split("\n") if x.strip()]
+        b2_list = [x.strip() for x in b2_in.split("\n") if x.strip()]
         
         b1_txt = os.path.join(out_dir, "b1.txt")
         b2_txt = os.path.join(out_dir, "b2.txt")
@@ -224,23 +280,16 @@ with tab1:
         terminal_header += "-"*45 + "\n"
         
         cmd = [
-            "docker", "run", "--rm", "-e", "PYTHONUNBUFFERED=1", "-v", "/:/data", DOCKER_IMG,
-            "python", "/opt/rmats/rmats.py",
-            "--b1", f"/data{b1_txt}", "--b2", f"/data{b2_txt}",
-            "--gtf", f"/data{gtf_path}", "--od", f"/data{out_dir}",
+            "python2.7", os.path.join(os.path.dirname(__file__), "rMATS-turbo-Linux-UCS4", "rmats.py"),
+            "--b1", b1_txt, "--b2", b2_txt,
+            "--gtf", gtf_path, "--od", out_dir,
             "-t", "paired", "--readLength", str(READLEN),
             "--libType", LIBTYPE, "--nthread", str(THREADS)
         ]
 
         # --- Execution Section ---
-        with st.status("🚀 Processing rMATS Analysis...", expanded=True) as status:
-            # 💡 Helpful Hardware Tips for the User
-            st.info("""
-                **Performance Tip:** For the fastest results, ensure your data is stored 
-                on an **SSD** rather than an HDD. Allocating **24 or more threads** 
-                in the settings will significantly reduce computation time.
-            """)
-
+        with st.status("🚀 Processing rMATS Analysis, it may take a few minutes depending on your system performance...", expanded=True) as status:
+           
             # Start the subprocess
             proc = subprocess.Popen(
                 cmd, 
@@ -255,8 +304,8 @@ with tab1:
             # Live Terminal Feed
             for line in iter(proc.stdout.readline, ""):
                 full_log.append(line.strip())
-                # Displaying the last 18 lines for a clean "scrolling" effect
-                log_win.code("\n".join(full_log[-18:]))
+                # Displaying the last 100 lines for a clean "scrolling" effect
+                log_win.code("\n".join(full_log[-100:]))
             
             proc.wait()
             
@@ -277,7 +326,7 @@ with tab2:
     with st.expander("📂 1. Source Data Configuration", expanded=True):
         s_c1, s_c2 = st.columns(2)
         with s_c1:
-            res_path = st.text_input("rMATS Result Dir", value="/media/erpl/hdd4/Om/checking/rmats_AENx_vs_AONx", 
+            res_path = st.text_input("rMATS Result Dir", value="/media/erpl/hdd4/Om/rMATS/rmats_AEHx_vs_AOHx", 
                                     help="The folder containing the .MATS.JCEC.txt files from Phase 1.")
             ev_type = st.selectbox("Event Class", ["SE", "MXE", "A3SS", "A5SS", "RI"], 
                                   help="Select the splicing event type you wish to search for.")
@@ -334,19 +383,18 @@ with tab2:
             e_file = os.path.join(s_out, "target_event.txt")
             selected_row.to_csv(e_file, sep="\t", index=False)
 
-            # Build Docker Command for Sashimi
+            # Build Local Command for Sashimi
             s_cmd = [
-                "docker", "run", "--rm", "-v", "/:/data", DOCKER_IMG,
-                "python", "/opt/sashimi/rmats2sashimiplot.py",
-                "--b1", ",".join([f"/data{x.strip()}" for x in sb1.split(",") if x.strip()]),
-                "--b2", ",".join([f"/data{x.strip()}" for x in sb2.split(",") if x.strip()]),
+                "python2.7", os.path.join(os.path.dirname(__file__), "rmats2sashimiplot", "rmats2sashimiplot.py"),
+                "--b1", ",".join([x.strip() for x in sb1.split(",") if x.strip()]),
+                "--b2", ",".join([x.strip() for x in sb2.split(",") if x.strip()]),
                 "--event-type", ev_type, 
-                "-e", f"/data{e_file}",
+                "-e", e_file,
                 "--exon_s", "1", 
                 "--intron_s", "5",
                 "--l1", "Group1", 
                 "--l2", "Group2", 
-                "-o", f"/data{s_out}"
+                "-o", s_out
             ]
             
             st.info(f"Rendering: {target_gene} (ID: {ev_id})")
@@ -361,18 +409,7 @@ with tab2:
                 proc.wait()
                 
                 if proc.returncode == 0:
-                    status.update(label="Sashimi Plot Ready!", state="complete")
+                    status.update(label="Sashimi Plot Ready!", state="complete", expanded=True)
                     st.success(f"Plot saved to: {s_out}")
                 else:
                     st.error("Check logs. Ensure BAM files are indexed (.bai) and coordinates match.")
-
-# --- Footer ---
-st.divider()
-st.markdown(
-    """
-    <div style="text-align: center; font-size: small;">
-        Designed and Developed by <a href="https://om.indhinditech.com" target="_blank" style="color: #FF0000; font-weight: bold; text-decoration: none;">Om</a>
-    </div>
-    """,
-    unsafe_allow_html=True
-)

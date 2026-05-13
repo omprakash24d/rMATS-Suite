@@ -325,10 +325,17 @@ def plot_c(options, id_str):
     """
     the plot part of the coordinate method
     """
-    path_index_gff = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                  'MISO/misopy/index_gff.py')
-    path_sashimi_plot = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                     'MISO/misopy/sashimi_plot/sashimi_plot.py')
+    try:
+        import misopy
+        misopy_dir = os.path.dirname(os.path.abspath(misopy.__file__))
+        path_index_gff = os.path.join(misopy_dir, 'index_gff.py')
+        path_sashimi_plot = os.path.join(misopy_dir, 'sashimi_plot/sashimi_plot.py')
+    except ImportError:
+        # Fallback to relative path if misopy not in site-packages
+        path_index_gff = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                      'MISO/misopy/index_gff.py')
+        path_sashimi_plot = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                         'MISO/misopy/sashimi_plot/sashimi_plot.py')
 
     python_executable = get_python_executable()
     # call python index_gff.py
@@ -358,10 +365,17 @@ def plot_e(options, id_str, gene_symbol, events_no):
     """
     the plot part of the events file method
     """
-    path_index_gff = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                  'MISO/misopy/index_gff.py')
-    path_sashimi_plot = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                     'MISO/misopy/sashimi_plot/sashimi_plot.py')
+    try:
+        import misopy
+        misopy_dir = os.path.dirname(os.path.abspath(misopy.__file__))
+        path_index_gff = os.path.join(misopy_dir, 'index_gff.py')
+        path_sashimi_plot = os.path.join(misopy_dir, 'sashimi_plot/sashimi_plot.py')
+    except ImportError:
+        # Fallback
+        path_index_gff = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                      'MISO/misopy/index_gff.py')
+        path_sashimi_plot = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                                         'MISO/misopy/sashimi_plot/sashimi_plot.py')
 
     python_executable = get_python_executable()
     # call python index_gff.py

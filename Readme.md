@@ -43,7 +43,7 @@ cd rMATS-Suite
 
 ### 2. Build the Docker Image
 
-The analysis engine runs inside a container to ensure all legacy dependencies (Python 2.7, GFortran 3, MISO) are perfectly configured.
+The analysis engine runs inside a container to ensure all legacy dependencies (Python 2.7, GFortran 3, MISO) are perfectly configured. Ensure to run this command from the rMATS-Suite dir, you can check your current working directory using pwd
 
 ```bash
 docker build -t rmats-suite:latest .
